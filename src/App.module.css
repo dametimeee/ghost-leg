@@ -1,0 +1,45 @@
+@import url(reset.css);
+@import url("https://fonts.googleapis.com/css?family=Nanum+Pen+Script:400");
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Nanum Pen Script";
+}
+
+input {
+  text-align: center;
+}
+
+.wrapper {
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.player_start_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 5.2em;
+}
+
+.playerBtn {
+  font-size: 3.3em;
+  display: flex;
+  gap: 1.2em;
+}
+
+.playerNum {
+  font-size: 1.3em;
+}
+
+.startBtn {
+  font-size: 2em;
+}
