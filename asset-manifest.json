@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ghost_leg/static/css/main.c51ed0d0.css",
+    "main.js": "/ghost_leg/static/js/main.1eaa4799.js",
+    "index.html": "/ghost_leg/index.html",
+    "main.c51ed0d0.css.map": "/ghost_leg/static/css/main.c51ed0d0.css.map",
+    "main.1eaa4799.js.map": "/ghost_leg/static/js/main.1eaa4799.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c51ed0d0.css",
+    "static/js/main.1eaa4799.js"
+  ]
+}
