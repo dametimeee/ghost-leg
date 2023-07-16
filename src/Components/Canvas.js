@@ -22,6 +22,7 @@ const Canvas = ({ playerNum }) => {
   let inputWidth = 100;
   let inputHeight = 30;
 
+  // 플레이어 입력 항목을 설정합니다.
   const handleSetPlayerInput = () => {
     let inputNameArray = [];
 
@@ -31,7 +32,7 @@ const Canvas = ({ playerNum }) => {
 
       inputNameArray.push(
         <input
-          className={styles.playerName} // Update the class name to use CSS module
+          className={styles.playerName} // CSS 모듈을 사용하도록 클래스 이름을 업데이트합니다.
           type="text"
           key={i}
           id={`line${i}`}
@@ -52,13 +53,14 @@ const Canvas = ({ playerNum }) => {
     return inputNameArray;
   };
 
+  // 대상 입력 항목을 설정합니다.
   const handleSetTargetInput = () => {
     let inputTargetArray = [];
 
     for (let i = 0; i < playerNum; i++) {
       inputTargetArray.push(
         <input
-          className={styles.targetName} // Update the class name to use CSS module
+          className={styles.targetName} // CSS 모듈을 사용하도록 클래스 이름을 업데이트합니다.
           type="text"
           key={i}
           style={{
@@ -79,6 +81,7 @@ const Canvas = ({ playerNum }) => {
     return inputTargetArray;
   };
 
+  // 상단 항목 버튼 클릭 시 호출되는 함수입니다.
   const handleDrawClickRoute = (event) => {
     if (ctx && goNext) {
       inputClickNum++;
@@ -86,7 +89,7 @@ const Canvas = ({ playerNum }) => {
       const lineIndex = Number(lineId.slice(-1));
 
       if (!isNaN(lineIndex)) {
-        // 유효한 lineIndex인지 확인
+        // 유효한 lineIndex인지 확인합니다.
         let result = drawGhostLegs(lineIndex);
         all_result.push([result, event.target.value]);
 
@@ -99,6 +102,7 @@ const Canvas = ({ playerNum }) => {
     }
   };
 
+  // 다음으로 넘어가는 함수를 처리합니다.
   const handleSetGoNext = () => {
     if (inputClickNum === playerNum) {
       setGoResult(true);
@@ -118,7 +122,7 @@ const Canvas = ({ playerNum }) => {
     setGoNext(true);
   };
 
-  // ---------------------- draw --------------------------
+  // ---------------------- 그리기 관련 함수 --------------------------
 
   let initialPointX = 50;
   let initialPointY = 50;
@@ -128,7 +132,6 @@ const Canvas = ({ playerNum }) => {
   let baseArrays = [];
   let moveRight = 150;
   let moveLeft = -150;
-  let playersInitialXCoord = {};
   let numRandomLadders;
   let player = [];
   let playPen = [];
@@ -145,10 +148,12 @@ const Canvas = ({ playerNum }) => {
   ];
   let yValue;
 
+  // 사다리의 개수를 설정합니다.
   const setLadderNum = () => {
     numRandomLadders = Math.floor(Math.random() * 4) + 2;
   };
 
+  // 수직 선을 그립니다.
   const drawVerticalLines = (ctx) => {
     setLadderNum();
     generateRandomCrossPoints();
@@ -157,7 +162,7 @@ const Canvas = ({ playerNum }) => {
 
     for (let i = 0; i < playerNum; i++) {
       makeLineIdObj(i);
-      // create players and initialize their start point
+      // 플레이어를 생성하고 시작점을 초기화합니다.
       player[i] = {};
       player[i].xCoord = initialPointX + i * 150;
       player[i].yCoord = initialPointY;
@@ -171,23 +176,25 @@ const Canvas = ({ playerNum }) => {
     ctx.stroke();
   };
 
+  // lineIdObj를 생성합니다.
   const makeLineIdObj = (i) => {
     lineIdObj[`line${i}`] = i;
   };
 
+  // 랜덤한 교차 지점을 생성합니다.
   const generateRandomCrossPoints = () => {
     for (let i = 0; i < playerNum; i++) {
       if (i < playerNum - 1) {
-        // create randomCrossPointArrays that will store cross points
+        // 교차 지점을 저장할 배열인 randomCrossPointArrays를 생성합니다.
         if (!randomCrossPointArrays[i]) {
           randomCrossPointArrays[i] = [];
         }
         if (!randomCrossPointArrays[i + 1]) {
           randomCrossPointArrays[i + 1] = [];
         }
-        // push random cross points into randomCrossPointArrays from above.
+        // 랜덤한 교차 지점을 생성하고 randomCrossPointArrays에 추가합니다.
         for (let j = 0; j < numRandomLadders; j++) {
-          // randomCrossPoint should be between 125 and 670
+          // 교차 지점은 125에서 670 사이여야 합니다.
           let randomCrossPoints =
             Math.floor(Math.random() * 300 + Math.random() * 300) + 100;
           randomCrossPointArrays[i].push(randomCrossPoints);
@@ -199,11 +206,12 @@ const Canvas = ({ playerNum }) => {
     }
   };
 
+  // 베이스 라인을 그립니다.
   const handleDrawBaseLine = (ctx) => {
     ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
     ctx.beginPath();
 
-    // draw vertical baseline
+    // 수직 베이스 라인 그리기
     for (let i = 0; i < playerNum; i++) {
       player[i].xCoord = initialPointX + i * 150;
       player[i].yCoord = initialPointY;
@@ -211,7 +219,7 @@ const Canvas = ({ playerNum }) => {
       ctx.lineTo(player[i].xCoord, endLineY);
     }
 
-    // draw horizontal baseline
+    // 수평 베이스 라인 그리기
     for (let i = 0; i < playerNum - 1; i++) {
       for (let j = 0; j < baseArrays[i].length; j++) {
         ctx.moveTo(player[i].xCoord, baseArrays[i][j]);
@@ -229,12 +237,14 @@ const Canvas = ({ playerNum }) => {
     ctx.stroke();
   };
 
+  // 캔버스를 지웁니다.
   const hadnleClearCanvas = () => {
     if (ctx) {
       ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
     }
   };
 
+  // 사다리를 그립니다.
   const drawGhostLegs = (lineIndex) => {
     let i = lineIndex;
 
